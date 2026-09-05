@@ -1,28 +1,30 @@
 # 🎨 ui-account - Material Design 3 Account Management Library
 
-A beautiful, easy-to-use Android Kotlin library for account selection and authentication UI components based on Google's Material Design 3.
+একটি সুন্দর, ব্যবহার করা সহজ Android Kotlin লাইব্রেরি যা Google এর Material Design 3 এর উপর ভিত্তি করে অ্যাকাউন্ট নির্বাচন এবং প্রমাণীকরণ UI কম্পোনেন্ট প্রদান করে।
 
 ![Version](https://img.shields.io/badge/version-1.0.0-blue.svg)
 ![License](https://img.shields.io/badge/license-MIT-green.svg)
 ![Kotlin](https://img.shields.io/badge/kotlin-1.9.0-purple.svg)
 ![Android](https://img.shields.io/badge/android-24%2B-brightgreen.svg)
 
-## ✨ Features
+## ✨ বৈশিষ্ট্য
 
-- 🎯 **AidIslamAuthButton** - Beautiful account selection button with Material Design 3
-- 📋 **AccountSelector** - Dialog-based account selector with elegant UI
-- 🎴 **AccountCard** - Detailed account card with description and category
-- 👤 **AccountAvatar** - Reusable avatar component with initial fallback
-- 🌈 **Material Design 3** - Complete Material Design 3 theme support
-- 🌙 **Dark Mode** - Full dark mode support
-- ⚡ **Lightweight** - Minimal dependencies, fast performance
-- 📱 **Responsive** - Works perfectly on all Android devices
+- 🎯 **AidIslamAuthButton** - Material Design 3 সহ সুন্দর অ্যাকাউন্ট নির্বাচন বাটন
+- 📋 **AccountSelector** - ডায়ালগ-ভিত্তিক অ্যাকাউন্ট নির্বাচক মার্জিত UI সহ
+- 📋 **EmptyAccountSelector** - যখন কোনো অ্যাকাউন্ট নেই তখনের জন্য ডিজাইন
+- 🎴 **AccountCard** - বর্ণনা এবং বিভাগ সহ বিস্তারিত অ্যাকাউন্ট কার্ড
+- 👤 **AccountAvatar** - প্রাথমিক ফলব্যাক সহ পুনঃব্যবহারযোগ্য অ্যাভাটার কম্পোনেন্ট
+- 🔐 **AccountManagerHelper** - Android OS-level অ্যাকাউন্ট ইন্টিগ্রেশন
+- 🌈 **Material Design 3** - সম্পূর্ণ Material Design 3 থিম সাপোর্ট
+- 🌙 **Dark Mode** - সম্পূর্ণ ডার্ক মোড সাপোর্ট
+- ⚡ **Lightweight** - ন্যূনতম নির্ভরতা, দ্রুত পারফরম্যান্স
+- 📱 **Responsive** - সকল Android ডিভাইসে নিখুঁতভাবে কাজ করে
 
-## 📦 Installation
+## 📦 ইনস্টলেশন
 
-### Step 1: Add JitPack Repository
+### ধাপ 1: JitPack রিপোজিটরি যোগ করুন
 
-In your project's `settings.gradle.kts` (or `settings.gradle`):
+আপনার প্রজেক্টের `settings.gradle.kts` (বা `settings.gradle`) এ:
 
 ```kotlin
 dependencyResolutionManagement {
@@ -30,14 +32,14 @@ dependencyResolutionManagement {
     repositories {
         google()
         mavenCentral()
-        maven { url = uri("https://jitpack.io") }  // Add this line
+        maven { url = uri("https://jitpack.io") }  // এই লাইন যোগ করুন
     }
 }
 ```
 
-### Step 2: Add Library Dependency
+### ধাপ 2: লাইব্রেরি ডিপেন্ডেন্সি যোগ করুন
 
-In your app's `build.gradle.kts` (or `build.gradle`):
+আপনার অ্যাপের `build.gradle.kts` (বা `build.gradle`) এ:
 
 ```kotlin
 dependencies {
@@ -45,7 +47,7 @@ dependencies {
 }
 ```
 
-Or for Gradle (Groovy):
+অথবা Gradle (Groovy) এর জন্য:
 
 ```gradle
 dependencies {
@@ -53,134 +55,204 @@ dependencies {
 }
 ```
 
-## 🚀 Quick Start
+### ধাপ 3: Permissions যোগ করুন (Optional - AccountManager ব্যবহার করলে)
 
-### 1. Basic Usage - AidIslamAuthButton
+আপনার `AndroidManifest.xml` এ:
+
+```xml
+<uses-permission android:name="android.permission.GET_ACCOUNTS" />
+```
+
+## 🚀 দ্রুত শুরু
+
+### 1. বেসিক ব্যবহার - AidIslamAuthButton
 
 ```kotlin
 import com.aidislam.uiaccount.composables.AidIslamAuthButton
-import com.aidislam.uiaccount.model.Account
+import com.aidislam.uiaccount.model.Account, AccountType
+import com.aidislam.uiaccount.theme.AidIslamTheme
 import androidx.compose.runtime.Composable
 
 @Composable
 fun MyAuthScreen() {
-    val account = Account(
-        id = "user_001",
-        name = "Yy",
-        email = "aa@aidislam.org",
-        isActive = true,
-        avatarUrl = "https://example.com/avatar.jpg"
-    )
-    
-    AidIslamAuthButton(
-        account = account,
-        onClick = {
-            // Handle account selection
-            println("Account selected: ${account.name}")
-        }
-    )
-}
-```
-
-### 2. Account Selector Dialog
-
-```kotlin
-import com.aidislam.uiaccount.composables.AccountSelector
-import com.aidislam.uiaccount.model.Account, AccountType
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-
-@Composable
-fun AccountSelectionScreen() {
-    val showDialog = remember { mutableStateOf(true) }
-    
-    val accounts = listOf(
-        Account(
-            id = "1",
+    AidIslamTheme {
+        val account = Account(
+            id = "user_001",
             name = "Yy",
             email = "aa@aidislam.org",
             isActive = true,
-            accountType = AccountType.USER
-        ),
-        Account(
-            id = "2",
-            name = "Pioneer Automotive",
-            email = "info@pioneer.com",
-            isActive = false,
-            accountType = AccountType.ORGANIZATION
+            accountType = AccountType.USER,
+            avatarUrl = "https://example.com/avatar.jpg"
         )
-    )
-    
-    if (showDialog.value) {
-        AccountSelector(
-            accounts = accounts,
-            onAccountSelected = { selectedAccount ->
-                println("Selected: ${selectedAccount.name}")
-                showDialog.value = false
-            },
-            onDismiss = {
-                showDialog.value = false
-            },
-            onAddAccount = {
-                // Handle adding new account
-                println("Add new account tapped")
+        
+        AidIslamAuthButton(
+            account = account,
+            onClick = {
+                println("অ্যাকাউন্ট নির্বাচিত: ${account.name}")
             }
         )
     }
 }
 ```
 
-### 3. Account Card
+### 2. অ্যাকাউন্ট সিলেক্টর ডায়ালগ
+
+```kotlin
+import com.aidislam.uiaccount.composables.AccountSelector
+import com.aidislam.uiaccount.model.Account, AccountType
+import com.aidislam.uiaccount.theme.AidIslamTheme
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+
+@Composable
+fun AccountSelectionScreen() {
+    AidIslamTheme {
+        val showDialog = remember { mutableStateOf(true) }
+        
+        val accounts = listOf(
+            Account(
+                id = "1",
+                name = "Yy",
+                email = "aa@aidislam.org",
+                isActive = true,
+                accountType = AccountType.USER
+            ),
+            Account(
+                id = "2",
+                name = "Pioneer Automotive",
+                email = "info@pioneer.com",
+                isActive = false,
+                accountType = AccountType.ORGANIZATION
+            )
+        )
+        
+        if (showDialog.value) {
+            AccountSelector(
+                accounts = accounts,
+                onAccountSelected = { selectedAccount ->
+                    println("নির্বাচিত: ${selectedAccount.name}")
+                    showDialog.value = false
+                },
+                onDismiss = {
+                    showDialog.value = false
+                },
+                onAddAccount = {
+                    println("নতুন অ্যাকাউন্ট যোগ করুন")
+                }
+            )
+        }
+    }
+}
+```
+
+### 3. অ্যাকাউন্ট খালি থাকলে (Empty State)
+
+```kotlin
+import com.aidislam.uiaccount.composables.EmptyAccountSelector
+import com.aidislam.uiaccount.theme.AidIslamTheme
+
+@Composable
+fun NoAccountsScreen() {
+    AidIslamTheme {
+        val showDialog = remember { mutableStateOf(true) }
+        
+        if (showDialog.value) {
+            EmptyAccountSelector(
+                onAddAccount = {
+                    println("অ্যাকাউন্ট যোগ করুন বাটন টাপ করা হয়েছে")
+                },
+                onDismiss = {
+                    showDialog.value = false
+                }
+            )
+        }
+    }
+}
+```
+
+### 4. Android AccountManager থেকে অ্যাকাউন্ট লোড করুন
+
+```kotlin
+import com.aidislam.uiaccount.util.AccountManagerHelper
+import com.aidislam.uiaccount.composables.AccountSelector
+import com.aidislam.uiaccount.composables.EmptyAccountSelector
+import com.aidislam.uiaccount.theme.AidIslamTheme
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import kotlinx.coroutines.launch
+
+@Composable
+fun AccountManagerScreen(context: Context) {
+    AidIslamTheme {
+        val accounts = remember { mutableStateOf(emptyList<Account>()) }
+        val showDialog = remember { mutableStateOf(true) }
+        val accountManagerHelper = AccountManagerHelper(context)
+        
+        // OS থেকে অ্যাকাউন্ট লোড করুন
+        LaunchedEffect(Unit) {
+            val aidIslamAccounts = accountManagerHelper.getAidIslamAccounts()
+            accounts.value = aidIslamAccounts
+        }
+        
+        if (showDialog.value) {
+            if (accounts.value.isEmpty()) {
+                // কোনো অ্যাকাউন্ট নেই
+                EmptyAccountSelector(
+                    onAddAccount = { /* নতুন অ্যাকাউন্ট যোগ করুন */ },
+                    onDismiss = { showDialog.value = false }
+                )
+            } else {
+                // অ্যাকাউন্ট আছে
+                AccountSelector(
+                    accounts = accounts.value,
+                    onAccountSelected = { account ->
+                        println("নির্বাচিত: ${account.name}")
+                        showDialog.value = false
+                    },
+                    onDismiss = { showDialog.value = false },
+                    onAddAccount = { /* আরও অ্যাকাউন্ট যোগ করুন */ }
+                )
+            }
+        }
+    }
+}
+```
+
+### 5. Account Card
 
 ```kotlin
 import com.aidislam.uiaccount.composables.AccountCard
-import com.aidislam.uiaccount.model.Account
+import com.aidislam.uiaccount.model.Account, AccountType
+import com.aidislam.uiaccount.theme.AidIslamTheme
 
 @Composable
 fun AccountDetailScreen() {
-    val account = Account(
-        id = "3",
-        name = "AZDMV",
-        email = "contact@azdmv.org",
-        isActive = false,
-        accountType = AccountType.SERVICE
-    )
-    
-    AccountCard(
-        account = account,
-        description = "Aid Zest Dynamic Modern Vision - Innovative solutions for a brighter future.",
-        onClick = {
-            println("Card tapped for: ${account.name}")
-        }
-    )
+    AidIslamTheme {
+        val account = Account(
+            id = "3",
+            name = "AZDMV",
+            email = "contact@azdmv.org",
+            isActive = false,
+            accountType = AccountType.SERVICE
+        )
+        
+        AccountCard(
+            account = account,
+            description = "Aid Zest Dynamic Modern Vision - উজ্জ্বল ভবিষ্যতের জন্য উদ্ভাবনী সমাধান।",
+            onClick = {
+                println("কার্ড ট্যাপ করা হয়েছে: ${account.name}")
+            }
+        )
+    }
 }
 ```
 
-### 4. Custom Avatar
+## 🎨 থিমিং
 
-```kotlin
-import com.aidislam.uiaccount.composables.AccountAvatar
+লাইব্রেরি Material Design 3 থিম সাপোর্ট সহ আসে।
 
-@Composable
-fun ProfileAvatar() {
-    val account = Account(
-        id = "4",
-        name = "Aid Islam",
-        email = "aidislam@example.com"
-    )
-    
-    AccountAvatar(
-        account = account,
-        size = 56.dp  // Customizable size
-    )
-}
-```
-
-## 🎨 Theming
-
-The library comes with Material Design 3 theme support out of the box.
-
-### Apply Theme in Your App
+### আপনার অ্যাপে থিম প্রয়োগ করুন
 
 ```kotlin
 import com.aidislam.uiaccount.theme.AidIslamTheme
@@ -190,18 +262,19 @@ import androidx.compose.material3.MaterialTheme
 fun MyApp() {
     AidIslamTheme {
         MaterialTheme {
-            // Your app content
+            // আপনার অ্যাপ কন্টেন্ট
             MyScreen()
         }
     }
 }
 ```
 
-### Customize Colors
+### কাস্টম রঙ সেট করুন
 
 ```kotlin
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.lightColorScheme
+import androidx.compose.ui.graphics.Color
 
 @Composable
 fun MyAppWithCustomTheme() {
@@ -212,119 +285,181 @@ fun MyAppWithCustomTheme() {
     )
     
     MaterialTheme(colorScheme = customColors) {
-        // Your app content
+        // আপনার অ্যাপ কন্টেন্ট
     }
 }
 ```
 
-## 📊 Data Models
+## 📊 ডেটা মডেল
 
 ### Account Model
 
 ```kotlin
 data class Account(
-    val id: String,
-    val name: String,
-    val email: String,
-    val avatarUrl: String? = null,
-    val isActive: Boolean = false,
-    val accountType: AccountType = AccountType.USER
+    val id: String,                          // অনন্য আইডি
+    val name: String,                        // অ্যাকাউন্টের নাম
+    val email: String,                       // ইমেইল ঠিকানা
+    val avatarUrl: String? = null,           // অ্যাভাটার ইমেজ URL (ঐচ্ছিক)
+    val isActive: Boolean = false,           // সক্রিয় অ্যাকাউন্ট?
+    val accountType: AccountType = AccountType.USER  // অ্যাকাউন্টের ধরন
 )
 
 enum class AccountType {
-    USER,
-    ORGANIZATION,
-    SERVICE
+    USER,           // ব্যক্তিগত ব্যবহারকারী
+    ORGANIZATION,   // সংস্থা/কোম্পানি
+    SERVICE         // সেবা অ্যাকাউন্ট
 }
 ```
 
-## 🛠️ Complete Example - Full Implementation
+## 🛠️ সম্পূর্ণ উদাহরণ - MainActivity
 
 ```kotlin
 import android.os.Bundle
+import android.content.Context
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.material3.Scaffold
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
+import androidx.compose.foundation.lazy.items
+import androidx.compose.material3.*
+import androidx.compose.runtime.*
 import com.aidislam.uiaccount.composables.AccountSelector
 import com.aidislam.uiaccount.composables.AccountCard
+import com.aidislam.uiaccount.composables.EmptyAccountSelector
 import com.aidislam.uiaccount.model.Account, AccountType
 import com.aidislam.uiaccount.theme.AidIslamTheme
+import com.aidislam.uiaccount.util.AccountManagerHelper
+import kotlinx.coroutines.launch
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
-            AidIslamTheme {
-                val showDialog = remember { mutableStateOf(true) }
-                
-                val accounts = listOf(
-                    Account(
-                        id = "1",
-                        name = "Yy",
-                        email = "aa@aidislam.org",
-                        isActive = true,
-                        accountType = AccountType.USER
-                    ),
-                    Account(
-                        id = "2",
-                        name = "Pioneer Automotive",
-                        email = "info@pioneer.com",
-                        isActive = false,
-                        accountType = AccountType.ORGANIZATION
-                    ),
-                    Account(
-                        id = "3",
-                        name = "AZDMV",
-                        email = "contact@azdmv.org",
-                        isActive = false,
-                        accountType = AccountType.SERVICE
+            MyAccountApp(this)
+        }
+    }
+}
+
+@Composable
+fun MyAccountApp(context: Context) {
+    AidIslamTheme {
+        val showDialog = remember { mutableStateOf(true) }
+        val accounts = remember { mutableStateOf(emptyList<Account>()) }
+        val selectedAccount = remember { mutableStateOf<Account?>(null) }
+        val accountManagerHelper = AccountManagerHelper(context)
+        val scope = rememberCoroutineScope()
+        
+        // OS থেকে অ্যাকাউন্ট লোড করুন
+        LaunchedEffect(Unit) {
+            scope.launch {
+                val osAccounts = accountManagerHelper.getAidIslamAccounts()
+                accounts.value = if (osAccounts.isNotEmpty()) {
+                    osAccounts
+                } else {
+                    // ডেমো অ্যাকাউন্ট (যদি OS থেকে না পাওয়া যায়)
+                    listOf(
+                        Account(
+                            id = "1",
+                            name = "Yy",
+                            email = "aa@aidislam.org",
+                            isActive = true,
+                            accountType = AccountType.USER
+                        ),
+                        Account(
+                            id = "2",
+                            name = "Pioneer Automotive",
+                            email = "info@pioneer.com",
+                            isActive = false,
+                            accountType = AccountType.ORGANIZATION
+                        )
+                    )
+                }
+            }
+        }
+        
+        Scaffold(
+            topBar = {
+                TopAppBar(
+                    title = { Text("AZDMV Account Manager") },
+                    colors = TopAppBarDefaults.topAppBarColors(
+                        containerColor = MaterialTheme.colorScheme.primary,
+                        titleContentColor = MaterialTheme.colorScheme.onPrimary
                     )
                 )
+            }
+        ) { paddingValues ->
+            Column(
+                modifier = Modifier
+                    .fillMaxSize()
+                    .padding(paddingValues)
+            ) {
+                // অ্যাকাউন্ট সিলেক্টর ডায়ালগ দেখান
+                if (showDialog.value) {
+                    if (accounts.value.isEmpty()) {
+                        EmptyAccountSelector(
+                            onAddAccount = { /* নতুন অ্যাকাউন্ট যোগ করুন */ },
+                            onDismiss = { showDialog.value = false }
+                        )
+                    } else {
+                        AccountSelector(
+                            accounts = accounts.value,
+                            onAccountSelected = { account ->
+                                selectedAccount.value = account
+                                showDialog.value = false
+                            },
+                            onDismiss = { showDialog.value = false },
+                            onAddAccount = { /* নতুন অ্যাকাউন্ট যোগ করুন */ }
+                        )
+                    }
+                }
                 
-                Scaffold { paddingValues ->
-                    Column(
+                // নির্বাচিত অ্যাকাউন্ট দেখান
+                if (selectedAccount.value != null) {
+                    Card(
                         modifier = Modifier
-                            .fillMaxSize()
-                            .padding(paddingValues)
+                            .fillMaxWidth()
+                            .padding(16.dp)
                     ) {
-                        if (showDialog.value) {
-                            AccountSelector(
-                                accounts = accounts,
-                                onAccountSelected = { account ->
-                                    println("Selected: ${account.name}")
-                                    showDialog.value = false
-                                },
-                                onDismiss = { showDialog.value = false },
-                                onAddAccount = { 
-                                    println("Add account")
-                                }
+                        Column(modifier = Modifier.padding(16.dp)) {
+                            Text(
+                                text = "নির্বাচিত অ্যাকাউন্ট",
+                                style = MaterialTheme.typography.titleMedium
                             )
-                        }
-                        
-                        LazyColumn(
-                            modifier = Modifier
-                                .fillMaxWidth()
-                                .padding(16.dp),
-                            verticalArrangement = Arrangement.spacedBy(12.dp)
-                        ) {
-                            items(accounts.size) { index ->
-                                AccountCard(
-                                    account = accounts[index],
-                                    description = when(index) {
-                                        0 -> "Personal Account"
-                                        1 -> "Iconic vehicles known for their durability and classic design."
-                                        else -> "Aid Zest Dynamic Modern Vision - Innovative solutions for a brighter future."
-                                    },
-                                    onClick = {
-                                        println("Tapped: ${accounts[index].name}")
-                                    }
-                                )
+                            Spacer(modifier = Modifier.height(8.dp))
+                            Text(text = "নাম: ${selectedAccount.value?.name}")
+                            Text(text = "ইমেইল: ${selectedAccount.value?.email}")
+                            
+                            Spacer(modifier = Modifier.height(12.dp))
+                            Button(
+                                onClick = { showDialog.value = true },
+                                modifier = Modifier.fillMaxWidth()
+                            ) {
+                                Text("অ্যাকাউন্ট পরিবর্তন করুন")
                             }
                         }
+                    }
+                }
+                
+                // সকল অ্যাকাউন্ট কার্ড দেখান
+                LazyColumn(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(16.dp),
+                    verticalArrangement = Arrangement.spacedBy(12.dp)
+                ) {
+                    items(accounts.value) { account ->
+                        AccountCard(
+                            account = account,
+                            description = when (account.id) {
+                                "1" -> "ব্যক্তিগত অ্যাকাউন্ট - সক্রিয়"
+                                "2" -> "তাদের স্থায়িত্ব এবং ক্লাসিক ডিজাইনের জন্য পরিচিত আইকনিক যানবাহন।"
+                                else -> "Aid Zest Dynamic Modern Vision - উজ্জ্বল ভবিষ্যতের জন্য উদ্ভাবনী সমাধান।"
+                            },
+                            onClick = {
+                                selectedAccount.value = account
+                                showDialog.value = false
+                            }
+                        )
                     }
                 }
             }
@@ -333,111 +468,148 @@ class MainActivity : ComponentActivity() {
 }
 ```
 
-## 📋 Composable Components
+## 📋 Composable কম্পোনেন্টসমূহ
 
 ### AidIslamAuthButton
 
-Displays an individual account as a selectable button.
+একটি অ্যাকাউন্টকে নির্বাচনযোগ্য বাটন হিসেবে প্রদর্শন করে।
 
-**Parameters:**
-- `account: Account` - The account to display
-- `onClick: () -> Unit` - Callback when button is clicked
-- `modifier: Modifier` - Optional layout modifier
-- `isEnabled: Boolean` - Enable/disable the button
-- `backgroundColor: Color` - Custom background color
-- `contentColor: Color` - Custom content color
+**প্যারামিটার:**
+- `account: Account` - প্রদর্শনযোগ্য অ্যাকাউন্ট
+- `onClick: () -> Unit` - বাটন ক্লিক করা হলে কল করা হয়
+- `modifier: Modifier` - ঐচ্ছিক লেআউট মডিফায়ার
+- `isEnabled: Boolean` - বাটন সক্ষম/অক্ষম
+- `backgroundColor: Color` - কাস্টম পটভূমি রঙ
+- `contentColor: Color` - কাস্টম কন্টেন্ট রঙ
 
 ### AccountSelector
 
-Dialog for selecting from multiple accounts.
+একাধিক অ্যাকাউন্ট থেকে নির্বাচন করার জন্য ডায়ালগ।
 
-**Parameters:**
-- `accounts: List<Account>` - List of accounts to display
-- `onAccountSelected: (Account) -> Unit` - Callback for selection
-- `onDismiss: () -> Unit` - Callback for dismissal
-- `onAddAccount: (() -> Unit)?` - Optional callback for adding new account
+**প্যারামিটার:**
+- `accounts: List<Account>` - প্রদর্শনযোগ্য অ্যাকাউন্টের তালিকা
+- `onAccountSelected: (Account) -> Unit` - অ্যাকাউন্ট নির্বাচনের কলব্যাক
+- `onDismiss: () -> Unit` - ডায়ালগ বন্ধ হলে কলব্যাক
+- `onAddAccount: (() -> Unit)?` - নতুন অ্যাকাউন্ট যোগ করার ঐচ্ছিক কলব্যাক
+
+### EmptyAccountSelector
+
+যখন কোনো অ্যাকাউন্ট পাওয়া যায় না তখনকার ডায়ালগ।
+
+**প্যারামিটার:**
+- `onAddAccount: () -> Unit` - নতুন অ্যাকাউন্ট যোগ করার কলব্যাক
+- `onDismiss: () -> Unit` - ডায়ালগ বন্ধ হলে কলব্যাক
 
 ### AccountCard
 
-Detailed card display for an account.
+একটি অ্যাকাউন্টকে বিস্তারিত কার্ড হিসেবে প্রদর্শন করে।
 
-**Parameters:**
-- `account: Account` - The account to display
-- `description: String` - Description text
-- `onClick: () -> Unit` - Callback when card is clicked
-- `modifier: Modifier` - Optional layout modifier
+**প���যারামিটার:**
+- `account: Account` - প্রদর্শনযোগ্য অ্যাকাউন্ট
+- `description: String` - বর্ণনা টেক্সট
+- `onClick: () -> Unit` - কার্ড ক্লিক করা হলে কলব্যাক
+- `modifier: Modifier` - ঐচ্ছিক লেআউট মডিফায়ার
 
 ### AccountAvatar
 
-Avatar component for displaying account image or initial.
+অ্যাকাউন্ট ইমেজ বা প্রাথমিক অক্ষর প্রদর্শনের জন্য কম্পোনেন্ট।
 
-**Parameters:**
-- `account: Account` - The account to display
-- `modifier: Modifier` - Optional layout modifier
-- `size: Dp` - Size of the avatar (default: 40.dp)
+**প্যারামিটার:**
+- `account: Account` - প্রদর্শনযোগ্য অ্যাকাউন্ট
+- `modifier: Modifier` - ঐচ্ছিক লেআউট মডিফায়ার
+- `size: Dp` - অ্যাভাটারের আকার (ডিফল্ট: 40.dp)
 
-## 🔗 Using in Different Projects
+## 🔐 AccountManagerHelper - Android OS ইন্টিগ্রেশন
 
-You can easily copy and paste this library into any Android Kotlin project:
+```kotlin
+val helper = AccountManagerHelper(context)
 
-```bash
-# Clone or add to your project
-implementation("com.github.aidislam:ui-account:1.0.0")
+// শুধুমাত্র @aidislam.org অ্যাকাউন্ট পান
+val aidIslamAccounts = helper.getAidIslamAccounts()
 
-# Or use JitPack URL
-# Add to settings.gradle.kts:
-maven { url = uri("https://jitpack.io") }
+// সকল অ্যাকাউন্ট পান
+val allAccounts = helper.getAllAccounts()
+
+// @aidislam.org অ্যাকাউন্ট আছে কিনা চেক করুন
+val hasAccounts = helper.hasAidIslamAccounts()
 ```
 
-## 🐛 Troubleshooting
+## 📦 Maven/Gradle কমান্ড
 
-### Dependency Issues
+### Terminal থেকে ব্যবহার করুন
 
-If you get dependency conflicts, ensure you have the latest versions:
+```bash
+# লাইব্রেরি যোগ করুন (build.gradle.kts এ manually যোগ করুন)
+implementation("com.github.aidislam:ui-account:1.0.0")
+
+# প্রজেক্ট বিল্ড করুন
+./gradlew build
+
+# অ্যাপ চালান
+./gradlew installDebug
+
+# Desktop test
+./gradlew test
+```
+
+## 🐛 সমস্যা সমাধান
+
+### নির্ভরতা সমস্যা
+
+যদি নির্ভরতা সংঘর্ষ পান, সর্বশেষ সংস্করণ নিশ্চিত করুন:
 
 ```kotlin
 dependencies {
     implementation("androidx.compose.material3:material3:1.1.2")
     implementation("io.coil-kt:coil-compose:2.5.0")
+    implementation("androidx.lifecycle:lifecycle-runtime-ktx:2.6.2")
 }
 ```
 
-### Theme Not Applied
+### থিম প্রয়োগ না হলে
 
-Make sure you wrap your content with `AidIslamTheme`:
+নিশ্চিত করুন আপনার কন্টেন্ট `AidIslamTheme` এ মোড়ানো আছে:
 
 ```kotlin
 setContent {
     AidIslamTheme {
-        // Your content here
+        // আপনার কন্টেন্ট এখানে
     }
 }
 ```
 
-## 📚 Documentation
+### AccountManager ত্রুটি
 
-For more examples and advanced usage, check out:
-- [Material Design 3 Guidelines](https://m3.material.io/)
-- [Jetpack Compose Documentation](https://developer.android.com/jetpack/compose)
+Manifest এ পারমিশন যোগ করুন:
 
-## 📄 License
+```xml
+<uses-permission android:name="android.permission.GET_ACCOUNTS" />
+```
 
-This project is licensed under the MIT License - see the LICENSE file for details.
+## 📚 ডকুমেন্টেশন লিঙ্ক
 
-## 🤝 Contributing
+- [Material Design 3 নির্দেশিকা](https://m3.material.io/)
+- [Jetpack Compose ডকুমেন্টেশন](https://developer.android.com/jetpack/compose)
+- [GitHub রিপোজিটরি](https://github.com/aidislam/ui-account)
 
-Contributions are welcome! Please feel free to submit a Pull Request.
+## 📄 লাইসেন্স
 
-## 👨‍💻 Author
+এই প্রজেক্ট MIT লাইসেন্সের অধীন - বিস্তারিত জন্য LICENSE ফাইল দেখুন।
+
+## 🤝 অবদান রাখুন
+
+অবদান স্বাগত! দয়া করে একটি Pull Request জমা দিতে পারেন।
+
+## 👨‍💻 লেখক
 
 **Aid Islam**
 - GitHub: [@aidislam](https://github.com/aidislam)
-- Email: official@aidislam.com
+- Email: aidislam27@gmail.com
 
-## 🌟 Support
+## 🌟 সাপোর্ট
 
-If you find this library useful, please give it a star! ⭐
+এই লাইব্রেরি উপকারী মনে হলে একটি স্টার দিন! ⭐
 
 ---
 
-**Made with ❤️ for beautiful Android UIs**
+**সুন্দর Android UI এর জন্য ❤️ দিয়ে তৈরি**

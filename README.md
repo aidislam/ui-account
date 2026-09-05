@@ -432,7 +432,7 @@ Contributions are welcome! Please feel free to submit a Pull Request.
 
 **Aid Islam**
 - GitHub: [@aidislam](https://github.com/aidislam)
-- Email: aidislam27@gmail.com
+- Email: official@aidislam.com
 
 ## 🌟 Support
 

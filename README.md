@@ -12,7 +12,7 @@ A beautiful, easy-to-use Android Kotlin library for account selection and authen
 - 🎯 **AidIslamAuthButton** - Beautiful account selection button with Material Design 3
 - 📋 **AccountSelector** - Dialog-based account selector with elegant UI
 - 🎴 **AccountCard** - Detailed account card with description and category
-- 👤 **AccountAvatar** - Reusable avatar component with initial fallback
+- ❓️ **AccountAvatar** - Reusable avatar component with initial fallback
 - 🌈 **Material Design 3** - Complete Material Design 3 theme support
 - 🌙 **Dark Mode** - Full dark mode support
 - ⚡ **Lightweight** - Minimal dependencies, fast performance
@@ -389,7 +389,7 @@ implementation("com.github.aidislam:ui-account:1.0.0")
 maven { url = uri("https://jitpack.io") }
 ```
 
-## 🐛 Troubleshooting
+## 🚫 Troubleshooting
 
 ### Dependency Issues
 
@@ -428,7 +428,7 @@ This project is licensed under the MIT License - see the LICENSE file for detail
 
 Contributions are welcome! Please feel free to submit a Pull Request.
 
-## 👨‍💻 Author
+## ⭐️ Author
 
 **Aid Islam**
 - GitHub: [@aidislam](https://github.com/aidislam)
